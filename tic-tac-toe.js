@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const squares = document.querySelectorAll("#board div");
     const status = document.getElementById("status");
+    const newGameButton = document.querySelector(".btn");
+
+    const originalMessage = status.textContent;
 
     let currentPlayer = "X";
     let gameBoard = ["", "", "", "", "", "", "", "", ""];
@@ -67,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     });
 
-    // Exercise 4: Function to check winning combinations
+    // Exercise 4: Check for a winner
     function checkWinner(player) {
 
         return winningCombinations.some(function(combination) {
@@ -79,6 +82,32 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
     }
+
+    // Exercise 5: Restart the game
+    newGameButton.addEventListener("click", function() {
+
+        // Clear the game board
+        gameBoard = ["", "", "", "", "", "", "", "", ""];
+
+        // Reset the current player
+        currentPlayer = "X";
+
+        // Allow the game to start again
+        gameOver = false;
+
+        // Clear each square
+        squares.forEach(function(square) {
+            square.textContent = "";
+            square.classList.remove("X", "O", "hover");
+        });
+
+        // Restore the original status message
+        status.textContent = originalMessage;
+
+        // Remove the winning style
+        status.classList.remove("you-won");
+
+    });
 
 });
 

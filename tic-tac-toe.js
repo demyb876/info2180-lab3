@@ -28,10 +28,10 @@ document.addEventListener("DOMContentLoaded", function() {
         // Exercise 1: Style each square
         square.classList.add("square");
 
-        // Exercise 2: Add X or O when clicked
+        // Exercise 2 and 6: Add X or O and prevent cheating
         square.addEventListener("click", function() {
 
-            if (gameOver) {
+            if (gameOver || gameBoard[index] !== "") {
                 return;
             }
 
@@ -50,6 +50,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 return;
             }
 
+            // Check if the game is a draw
+            if (gameBoard.every(function(cell) {
+                return cell !== "";
+            })) {
+                status.textContent = "It's a Draw!";
+                gameOver = true;
+                return;
+            }
+
             // Switch players
             if (currentPlayer === "X") {
                 currentPlayer = "O";
@@ -61,7 +70,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Exercise 3: Add hover effect
         square.addEventListener("mouseenter", function() {
-            square.classList.add("hover");
+            if (!gameOver && gameBoard[index] === "") {
+                square.classList.add("hover");
+            }
         });
 
         square.addEventListener("mouseleave", function() {
